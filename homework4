@@ -1,0 +1,46 @@
+# 1. Реализовать структуру данных стэк, который за О(1) выдает минимум в стэке:
+
+class MinStack:
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.s = []
+        self.mins = [float('inf')]
+
+    def push(self, val: int) -> None:
+        self.s.append(val)
+        self.mins.append(min(self.mins[-1], val))
+
+    def pop(self) -> None:
+        self.s.pop()
+        self.mins.pop()
+
+    def top(self) -> int:
+        return self.s[-1]
+
+    def getMin(self) -> int:
+        return self.mins[-1]
+
+
+# Написать код для задачи: "Обработка сетевых пакетов", которую обсудили в конце семинара, условие здесь:
+
+import sys
+from collections import deque
+
+if __name__ == '__main__':
+    reader = (map(int, s.split()) for s in sys.stdin)
+    size, n = next(reader)
+    times = deque()
+    for a, d in reader:
+        while times and times[0] <= a:
+                times.popleft()
+        if len(times) < size:
+            if times:
+                a = max(a, times[-1])
+            print(a)
+            times.append(a+d)
+        else:
+            print(-1)
+
