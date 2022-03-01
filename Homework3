@@ -1,0 +1,69 @@
+# В диапазоне натуральных чисел от 2 до 99 определить, сколько из них кратны каждому из чисел в диапазоне от 2 до 9.
+
+result = {}
+for n in range(2, 10):
+    result[n] = []
+    for f in range(2, 100):
+        if f % n == 0:
+            result[n].append(f)
+    print(
+        f'Для числа {n} кратны - {len(result[n])}. Кратные числа: {result[n]}.'
+        )
+
+#  В массиве случайных целых чисел поменять местами минимальный и максимальный элементы.
+
+import random
+
+r = [random.randint(0, 99) for _ in range(10)]
+print(f'Массив до изменения: {r}')
+
+max = r[0]
+min = r[0]
+
+for i in r:
+    if i > max:
+        max = i
+    elif i < min:
+        min = i
+min_index = r.index(min)
+max_index = r.index(max)
+r[min_index], r[max_index] = r[max_index], r[min_index]
+print(f'Массив после изменения элементов {min_index} и {max_index}: {r}')
+
+# В массиве найти максимальный отрицательный элемент. Вывести на экран его значение и позицию в массиве.
+
+import random
+
+r = [random.randint(-99, 99) for _ in range(100)]
+print(f'Массив: {r}')
+
+min_index = 0
+
+for i in r:
+    if r[min_index] > i:
+        min_index = r.index(i)
+
+if r[min_index] >= 0:
+    print(f'В массиве нет отрицательных элементов')
+else:
+    print(f'В массиве минимальный отрицательный элемент: {r[min_index]}.',
+            f'Находится в массиве на месте {min_index}')
+
+# В одномерном массиве целых чисел определить два наименьших элемента. Они могут быть как равны между собой (оба являться минимальными), так и различаться.
+
+import random
+
+r = [random.randint(0, 99) for _ in range(100)]
+print(f'Массив: {r}')
+
+min_index_1 = 0
+min_index_2 = 1
+
+for i in r:
+    if r[min_index_1] > i:
+        min_index_2 = min_index_1
+        min_index_1 = r.index(i)
+    elif r[min_index_2] > i:
+        min_index_2 = r.index(i)
+
+print(f'Два наименьших эл-та: {r[min_index_1]} и {r[min_index_2]}')
