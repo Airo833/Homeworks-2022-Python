@@ -1,0 +1,58 @@
+
+#Реализовать обход дерева post-order. Сначала левое, потом правое поддерево, в последнюю очередь корень:
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        if(root==None):
+            return []
+        stack=[]
+        stack.append(root)
+        ans=[]
+        while stack:
+            curr=stack.pop()
+            ans.append(curr.val)
+            if(curr.left):
+                stack.append(curr.left)
+            if(curr.right):
+                stack.append(curr.right)
+        return ans[::-1]
+
+#Проверить дерево на симметричность:
+
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return False
+        if not root.left or not root.right:
+            if root.left == root.right:
+                return True
+            else:
+                return False
+
+        list_left_root = [root.left]
+        list_right_root = [root.right]
+
+        while list_left_root and list_right_root:
+            if len(list_left_root) != len(list_right_root):
+                return False
+            left_tmp_root = []
+            right_tmp_root = []
+
+            for i in range(len(list_left_root)):
+
+                if not list_left_root[i] or not list_right_root[i]:
+                    if list_left_root[i] != list_right_root[i]:
+                        return False
+
+                elif list_left_root[i] and list_right_root[i] and list_left_root[i].val != list_right_root[i].val:
+                    return False
+
+                else:
+                    left_tmp_root.append(list_left_root[i].left)
+                    right_tmp_root.append(list_right_root[i].right)
+                    left_tmp_root.append(list_left_root[i].right)
+                    right_tmp_root.append(list_right_root[i].left)
+
+            list_left_root = left_tmp_root
+            list_right_root = right_tmp_root
+
+        return True
