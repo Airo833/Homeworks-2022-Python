@@ -1,0 +1,53 @@
+#Одна задача на структуру данных "Непересекающиеся множества", рассмотренную на уроке.
+
+class Solution:
+    def makeConnected(self, n: int, connections: List[List[int]]) -> int:
+        if len(connections) >= n - 1:
+            clusters = []
+            idx_a = idx_b = -1
+            for a, b in connections:
+                idx_a, idx_b = -1, -1
+                for i, c in enumerate(clusters):
+                    if a in c:
+                        idx_a = i
+                    if b in c:
+                        idx_b = i
+                    if idx_a >= 0 and idx_b >= 0:
+                        break
+                if idx_a == idx_b == -1:
+                    clusters.append({a, b})
+                elif idx_a >= 0 and idx_b < 0:
+                    clusters[idx_a].add(b)
+                elif idx_a < 0 and idx_b >= 0:
+                    clusters[idx_b].add(a)
+                elif idx_a < idx_b:
+                    clusters[idx_a].update(clusters.pop(idx_b))
+                elif idx_b < idx_a:
+                    clusters[idx_b].update(clusters.pop(idx_a))
+            return len(clusters) + n - sum(len(c) for c in clusters) - 1
+        return -1
+
+
+#Задачи на 2 указателя:
+
+
+class Solution:
+    def reversePrefix(self, word: str, ch: str) -> str:
+        try:
+            ind = word.index(ch)+1
+        except ValueError:
+            return word
+        sub = word[0:ind]
+        return sub[::-1] + word[ind:]
+
+#############################
+
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        k = 0
+        for index in range(1,len(nums)):
+            if(nums[index] != nums[index-1]):
+                k+=1
+                nums[k] = nums[index]
+        return k+1
+        
